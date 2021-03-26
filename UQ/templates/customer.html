@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Uniqlo system</title>
+    <link id="theme" rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" title="theme" />
+    <link rel="stylesheet"
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300|Open+Sans:300italic|Open+Sans+Condensed:700|Open+Sans+Condensed:300|Open+Sans+Condensed:300|Open+Sans+Condensed:300"
+        type="text/css" />
+    <script type="text/javascript" language="javascript" src="{% static '/js/jquery-1.8.1.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/scripts.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/theme.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/custom.js' %}"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="row">
+            <header id="container-top">
+                <div id="logo"></div>
+                <nav>
+                    <div id="hmenu"> 
+                        <ul> 
+                          <li> 
+                            <a href="profit">產品利潤占比(年)</a> 
+                          </li>  
+                        </ul> 
+                    </div>
+                    <div id="hmenu"> 
+                        <ul> 
+                          <li> 
+                            <a href="sales">產品利潤占比(月)</a> 
+                          </li>  
+                        </ul> 
+                    </div> 
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="rfm">RFM</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="customer">消費者資訊</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="retention">消費者存活率</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="home">Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="clear"></div>
+            </header>
+        </div>
+        <div class="row">
+            <div id="container" class="pie">
+                <div id="tagline">
+                    <h1>
+                        Marketing Departmemt
+                    </h1>
+                </div>
+                <div id="page">
+                    <div id="main">
+                        <div class="clear" style="height:130px"></div>
+                        <section class="home">
+                            <h3>單月消費者資訊</h3>
+                            <div>
+                                <br>
+                                <form action="/uniqlo/customer" method="post" id="cus_form">
+                                {% csrf_token %}
+                                <label for="filt"><font face="sans-serif" size='4'><b>輸入年月:</b></font></label><br>
+
+                                <input type="text" name="y_id" class="form-control" placeholder="year" /><b><font size='4'>年</font></b>
+                                <input type="text" name="m_id" class="form-control" placeholder="month" /><b><font size='4'>月</font></b>
+
+                                {% for c in customers %}
+                                {% endfor %}
+                                </select>
+                        
+                                <button type="submit">Submit</button>
+                                </form>
+                                <table class='table' border="1px">
+                                    <thead>
+                                        <tr style="font-size: large;">
+                                            <th>顧客id</th>
+                                            <th>顧客名稱</th>
+                                            <th>顧客年齡</th>
+                                            <th>顧客電話</th>
+                                            <th>顧客最後消費日期</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for c in customers %}
+                                        <tr>
+                                            <td>{{ c.c_id}}</td>
+                                            <td>{{ c.c_name}}</td>
+                                            <td>{{ c.c_age }}</td>
+                                            <td>{{ c.c_phone }}</td>
+                                            <td>{{ c.c_fdate }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <footer id="footer" class="pie">
+                    <div class="bg"></div>
+            </div>
+            </footer>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+
+  <title>Uniqlo system</title>
+  <link id="theme" rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" title="theme" />
+  <link rel="stylesheet"
+    href="http://fonts.googleapis.com/css?family=Open+Sans:300|Open+Sans:300italic|Open+Sans+Condensed:700|Open+Sans+Condensed:300|Open+Sans+Condensed:300|Open+Sans+Condensed:300"
+    type="text/css" />
+  <script type="text/javascript" language="javascript" src="{% static '/js/jquery-1.8.1.min.js' %}"></script>
+  <script type="text/javascript" language="javascript" src="{% static '/js/scripts.js' %}"></script>
+  <script type="text/javascript" language="javascript" src="{% static '/js/theme.js' %}"></script>
+  <script type="text/javascript" language="javascript" src="{% static '/js/custom.js' %}"></script>
+</head>
+
+<body>
+  <div id="wrapper">
+    <div class="row">
+      <header id="container-top">
+        <div id="logo"></div>
+        <nav>
+          <div id="hmenu">
+            <ul>
+              <li>
+                <a href="profit">產品利潤占比(年)</a>
+              </li>
+            </ul>
+          </div>
+          <div id="hmenu">
+            <ul>
+              <li>
+                <a href="sales">產品利潤占比(月)</a>
+              </li>
+            </ul>
+          </div>
+          <div id="hmenu">
+            <ul>
+              <li>
+                <a href="marketing">品類佔有率</a>
+              </li>
+            </ul>
+          </div>
+          <div id="hmenu">
+            <ul>
+              <li>
+                <a href="monthsales">單月銷售額</a>
+              </li>
+            </ul>
+          </div>
+          <div id="hmenu">
+            <ul>
+              <li>
+                <a href="home">Home</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div class="clear"></div>
+      </header>
+    </div>
+    <div class="row">
+      <div id="container" class="pie">
+        <div id="tagline">
+          <h1>
+            Sales Departmemt
+          </h1>
+
+        </div>
+        <div id="page">
+          <div id="main">
+            <div class="clear" style="height:90px"></div>
+            <section class="home">
+              <h3>單月特定產品利潤占比</h3>
+              <div>
+                <br>
+                <!-- <form action="/uniqlo/sales" method="post"> -->
+                <form action="/uniqlo/sales" method="post" id="cus_form">
+                  {% csrf_token %}
+                  <label for="filt">
+                    <font face="sans-serif" size='4'><b>輸入年/月/查詢產品編號:</b></font>
+                  </label><br>
+                  <!--    <input type="text" name="filt_id" class="form-control" value=""/>年
+                        <input type="text" name="select_pid" class="form-control" value=""/>月 -->
+                  <input type="text" name="y_id" class="form-control" placeholder="year" /><b>
+                    <font size='4'>年</font>
+                  </b>
+                  <input type="text" name="m_id" class="form-control" p="month" /><b>
+                    <font size='4'>月</font>
+                  </b>
+                  <select name="filt_id" value="product">
+                    {% for c in orders %}
+                    <option>{{ c.p_id }}</option>
+                    {% endfor %}
+                  </select>
+
+                  <button type="submit">Submit</button>
+                </form>
+
+                <div> <b>
+                    <font size='4'>單月特定產品利潤{{ ttotal }} </font>
+                  </b></div>
+<!--                 <div> <b>
+                    <font size='4'>單月全部產品總銷售金額{{ revenue }}</font>
+                  </b></div> -->
+<!--                 <div> <b>
+                    <font size='4'>單月特定產品總利潤占比{{ percent|floatformat:3 }}%</font>
+                  </b></div> -->
+              </div>
+
+            </section>
+            <div>
+              {% autoescape off %}
+              {{ plot_div }}
+              {% endautoescape %}
+            </div>
+          </div>
+        </div>
+        <footer id="footer" class="pie">
+          <div class="bg"></div>
+      </div>
+      </footer>
+    </div>
+  </div>
+  </div>
+</body>
+
+</html>

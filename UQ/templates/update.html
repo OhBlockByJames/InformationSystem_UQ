@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Uniqlo system</title>
+    <link id="theme" rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" title="theme" />
+    <link rel="stylesheet"
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300|Open+Sans:300italic|Open+Sans+Condensed:700|Open+Sans+Condensed:300|Open+Sans+Condensed:300|Open+Sans+Condensed:300"
+        type="text/css" />
+    <script type="text/javascript" language="javascript" src="{% static '/js/jquery-1.8.1.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/scripts.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/theme.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/custom.js' %}"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="row">
+            <header id="container-top">
+                <div id="logo"></div>
+                <nav>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="order">再訂購點</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="plot">查看存貨</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="production">EPQ</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="update">訂單列表</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="material">原物料狀態</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="home">Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="clear"></div>
+            </header>
+        </div>
+        <div class="row">
+            <div id="container" class="pie">
+                <div id="tagline">
+                    <h1>
+                        Production Departmemt
+                    </h1>
+                </div>
+                <div id="page">
+                    <div id="main">
+                        <div class="clear" style="height:140px"></div>
+                        <section class="home">
+                            <h3>訂單列表</h3>
+                            <div class="clear" style="height:40px"></div>
+                            <td>
+                                <form action="/uniqlo/update" method="post">
+                                    <label for="filt" style="font-size: large;"><b>輸入產品ID:</b></label><br>
+                                    {% csrf_token %}
+                                    <select name="filt_id" value="product" style="font-size: large;">
+                                        {% for c in orders %}
+                                        <option>{{ c.p_id }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <!--         <label for="filt">input product id:</label><br>
+                                <input type="text" name="filt_id" class="form-control" value=""/> -->
+                                    <button type="submit">update</button>
+                                </form>
+                            </td>
+
+                            <div style="font-size: large;"><b>
+                                訂單消耗量:{{ Consumes }}<br>
+                                存貨剩餘量:{{ new }}
+                            </b></div>
+                            <table class='table' border="2px" style="font-size: large;">
+
+                                <tr>
+                                    <th>訂單ID</th>
+                                    <th>訂單金額</th>
+                                    <th>訂單日期</th>
+                                    <th>顧客ID</th>
+                                    <th>產品ID</th>
+                                </tr>
+
+                                <tbody>
+                                    {% for n in allorder %}
+                                    <tr>
+                                        <td>{{ n.o_id}}</td>
+                                        <td>{{ n.o_price }}</td>
+                                        <td>{{ n.o_date }}</td>
+                                        <td>{{ n.c_id }}</td>
+                                        <td>{{ n.p_id }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+                </div>
+                <footer id="footer" class="pie">
+                    <div class="bg"></div>
+            </div>
+            </footer>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Uniqlo system</title>
+    <link id="theme" rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" title="theme" />
+    <link rel="stylesheet"
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300|Open+Sans:300italic|Open+Sans+Condensed:700|Open+Sans+Condensed:300|Open+Sans+Condensed:300|Open+Sans+Condensed:300"
+        type="text/css" />
+    <script type="text/javascript" language="javascript" src="{% static '/js/jquery-1.8.1.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/scripts.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/theme.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/custom.js' %}"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="row">
+            <header id="container-top">
+                <div id="logo"></div>
+                <nav>
+                    <div id="hmenu"> 
+                        <ul> 
+                          <li> 
+                            <a href="marketing">行銷部門</a> 
+                          </li>  
+                        </ul> 
+                    </div> 
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="sales">銷售部門</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="home">Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="clear"></div>
+            </header>
+        </div>
+        <div class="row">
+            <div id="container" class="pie">
+                <div id="tagline">
+                    <h1>
+                        Marketing/Sales Departmemt
+                    </h1>
+                </div>
+                <div id="page">
+                    <div id="main">
+                        <div class="clear" style="height:140px"></div>
+                        <section class="home">
+                            <td>
+                                <h3>歷年特定產品利潤占比</h3>
+                                <div class="clear" style="height:30px"></div>
+                                <form name = "filt_id" action="/uniqlo/profit" method="post" >
+                                {% csrf_token %}
+                                <select name = "filt_id" style="padding:8px 20px; font-size:large;">
+                                    {% for c in allp %}
+                                    <option>{{ c.p_id }}</option>
+                                    {% endfor %}
+                                </select>
+                        
+                                <button type="submit" style="padding:10px 20px;"><font style="font-size: 15px;"><b>Submit</b></font></button>
+                                </form>
+                            </td>
+
+                        </section>
+                        <div style="font-size: large;"><b>
+                            products profit:{{ Category_Profit }}
+                            total profit:{{ Total_Profit }}
+                            利潤占比:{{ proportion|floatformat:3 }} %
+                        </div></b>
+                        <div>
+                            {% autoescape off %}
+                            {{ plot_div }}
+                            {% endautoescape %}
+                        </div>
+
+                    </div>
+                </div>
+                <footer id="footer" class="pie">
+                    <div class="bg"></div>
+            </div>
+            </footer>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

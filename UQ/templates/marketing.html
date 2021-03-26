@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+
+    <title>Uniqlo system</title>
+    <link id="theme" rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}" title="theme" />
+    <link rel="stylesheet"
+        href="http://fonts.googleapis.com/css?family=Open+Sans:300|Open+Sans:300italic|Open+Sans+Condensed:700|Open+Sans+Condensed:300|Open+Sans+Condensed:300|Open+Sans+Condensed:300"
+        type="text/css" />
+    <script type="text/javascript" language="javascript" src="{% static '/js/jquery-1.8.1.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/scripts.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/theme.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static '/js/custom.js' %}"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="row">
+            <header id="container-top">
+                <div id="logo"></div>
+                <nav>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="profit">產品利潤占比(年)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="sales">產品利潤占比(月)</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="marketing">品類佔有率</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="monthsales">單月銷售額</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="hmenu">
+                        <ul>
+                            <li>
+                                <a href="home">Home</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="clear"></div>
+            </header>
+        </div>
+        <div class="row">
+            <div id="container" class="pie">
+                <div id="tagline">
+                    <h1>
+                        Sales Departmemt
+                    </h1>
+                </div>
+                <div id="page">
+                    <div id="main">
+                        <div class="clear" style="height:90px"></div>
+                        <section class="home">
+                            <h3>歷年單一產品總品類佔有率</h3>
+                            <div class="clear" style="height:40px"></div>
+                            <div>
+                                <form name="filt_id" action="/uniqlo/marketing" method="post">
+                                    {% csrf_token %}
+                                    <select name="select_pid" style="padding:8px 20px; font-size:large;">
+                                        {% for c in allorder %}
+                                        {{ allorder  }}
+                                        <option>{{ c.p_id }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" style="padding:10px 20px;"><font style="font-size: 15px;"><b>Submit</b></font></button>
+                                </form>
+                                <div style="font-size: large;"><b>
+                                    產品{{ return_id }}銷售量:{{ category_sales|cut:".0" }}個
+                                    <br>
+                                    品類需求佔有率:{{ proportion|floatformat:2 }} %
+                                    <br>
+                                </b></div>
+                                <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto" class="border">
+
+                                    {% autoescape off %}
+                                    {{ plot_div }}
+                                    {% endautoescape %}
+                            
+                                </div>
+    
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+                <footer id="footer" class="pie">
+                    <div class="bg"></div>
+            </div>
+            </footer>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
